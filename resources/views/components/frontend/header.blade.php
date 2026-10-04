@@ -31,7 +31,28 @@
                 </a>
                 <button type="button" data-action="account" class="p-2 sm:px-3 sm:py-2 text-slate-600 hover:text-brand-primary rounded-full hover:bg-slate-100 transition flex items-center gap-2">
                     <i class="fa-regular fa-user text-xl sm:text-lg" aria-hidden="true"></i>
-                    <span class="hidden lg:inline text-xs font-semibold">Account</span>
+                    <!-- <span class="hidden lg:inline text-xs font-semibold">Account</span> -->
+
+                    @auth
+                        @if (auth()->user()->isStaff())
+                            <a href="{{ route('admin.dashboard') }}" class="p-2 sm:px-3 sm:py-2 text-slate-600 hover:text-brand-primary rounded-full hover:bg-slate-100 transition flex items-center gap-2">
+                                <i class="fa-solid fa-gauge text-xl sm:text-lg" aria-hidden="true"></i>
+                                <span class="hidden lg:inline text-xs font-semibold">Dashboard</span>
+                            </a>
+                        @endif
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="p-2 sm:px-3 sm:py-2 text-slate-600 hover:text-brand-primary rounded-full hover:bg-slate-100 transition flex items-center gap-2">
+                                <i class="fa-solid fa-right-from-bracket text-xl sm:text-lg" aria-hidden="true"></i>
+                                <span class="hidden lg:inline text-xs font-semibold">Logout</span>
+                            </button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}" class="p-2 sm:px-3 sm:py-2 text-slate-600 hover:text-brand-primary rounded-full hover:bg-slate-100 transition flex items-center gap-2">
+                            <i class="fa-regular fa-user text-xl sm:text-lg" aria-hidden="true"></i>
+                            <span class="hidden lg:inline text-xs font-semibold">Sign in</span>
+                        </a>
+                    @endauth
                 </button>
                 <button type="button" data-action="toggle-cart" aria-controls="cart-drawer" aria-expanded="false" class="relative bg-brand-primary hover:bg-brand-primaryHover text-white px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-full shadow-md transition-all flex items-center gap-2.5 group">
                     <i class="fa-solid fa-bag-shopping text-base group-hover:rotate-12 transition-transform" aria-hidden="true"></i>
